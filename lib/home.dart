@@ -99,7 +99,7 @@ class _homepageState extends State<homepage> {
           ),
         ),
         Container(
-          color: Colors.black, // สีพื้นหลังแทบเป็นสีดำ
+          color: Color.fromARGB(255, 26, 61, 99), // สีพื้นหลังแทบเป็นสีดำ
           padding: const EdgeInsets.symmetric(vertical: 20), // เพิ่ม Padding
           child: Row(
             mainAxisAlignment:
@@ -128,7 +128,15 @@ class _homepageState extends State<homepage> {
               ),
             ],
           ),
-        )
+        ),
+        Center(
+          child: Center(
+            child: ListView(
+              
+            ),
+          ),
+
+        ),
       ]),
     );
   }

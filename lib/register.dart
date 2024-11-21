@@ -23,6 +23,14 @@ class _registerState extends State<register> {
   }
 
   @override
+  bool? isChecked = false;
+  String? validateCheckbox(bool? value) {
+    if (value == null || !value) {
+      return 'กรุณาเลือก checkbox';
+    }
+    return null; // ถ้าผ่านการตรวจสอบ
+  }
+
   final formKey = GlobalKey<FormState>();
 
   TextEditingController name = TextEditingController();
@@ -30,103 +38,108 @@ class _registerState extends State<register> {
   TextEditingController email = TextEditingController();
 
   Future sign_up() async {
-    String url = "http://10.0.2.2/transport_login/register.php";
+    String url = "htttep://10.0.2.2/transport_login/register.php";
     final respone = await http.post(Uri.parse(url), body: {
       'name': name.text,
       'email': email.text,
       'password': pass.text,
     });
-    var data = jsonDecode(respone.body);
+    var data = json.decode(respone.body);
     if (data == "Error") {
       Navigator.pushNamed(context, 'register');
     } else {
-      Navigator.pushNamed(context, 'home');
+      Navigator.pushNamed(context, 'login');
     }
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
         title: const Text('Transport Application'),
       ),
-      body: Column(
+      body: ListView(
         children: [
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 7),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 13.0),
-                  child: showlogo(),
-                ),
-
-                // ส่วนของ Search Bar ชั่วคราว
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Container(
-                        width: 200,
-                        height: 30,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'ค้นหา...',
-                            suffixIcon: const Icon(Icons.search),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 5,
-                              horizontal: 5,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
+          Column(
+            children: [
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 7),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 13.0),
+                        child: showlogo(),
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              width: 200,
+                              height: 30,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: 'ค้นหา...',
+                                  suffixIcon: const Icon(Icons.search),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 5,
+                                    horizontal: 5,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
 
-                    // ส่วยของปุ่ม Icon
-                    Padding(
-                      padding: const EdgeInsets.only(right: 13.0),
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.grey,
-                        child: PopupMenuButton<String>(
-                          icon: const Icon(Icons.person, color: Colors.black),
-                          onSelected: (String value) {
-                            if (value == 'login') {
-                              print("เข้าสู่ระบบ");
-                              Navigator.pushNamed(context, 'login');
-                            } else if (value == 'register') {
-                              print("สมัครสมาชิก");
-                              Navigator.pushNamed(context, 'register');
-                            }
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'login',
-                              child: Text('เข้าสู่ระบบ'),
+                          // ส่วยของปุ่ม Icon
+                          Padding(
+                            padding: const EdgeInsets.only(right: 13.0),
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.grey,
+                              child: PopupMenuButton<String>(
+                                icon: const Icon(Icons.person,
+                                    color: Colors.black),
+                                onSelected: (String value) {
+                                  if (value == 'login') {
+                                    print("เข้าสู่ระบบ");
+                                    Navigator.pushNamed(context, 'login');
+                                  } else if (value == 'register') {
+                                    print("สมัครสมาชิก");
+                                    Navigator.pushNamed(context, 'register');
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry<String>>[
+                                  const PopupMenuItem<String>(
+                                    value: 'login',
+                                    child: Text('เข้าสู่ระบบ'),
+                                  ),
+                                  const PopupMenuItem<String>(
+                                    value: 'register',
+                                    child: Text('สมัครสมาชิก'),
+                                  ),
+                                ],
+                              ),
                             ),
-                            const PopupMenuItem<String>(
-                              value: 'register',
-                              child: Text('สมัครสมาชิก'),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    ]),
+              ),
+
+              // ส่วนของ Search Bar ชั่วคราว
+            ],
           ),
           Container(
-            color: Colors.black,
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Row(
+            color: Color.fromARGB(255, 26, 61, 99),
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
@@ -153,9 +166,15 @@ class _registerState extends State<register> {
             ),
           ),
           Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: (Color.fromARGB(255, 252, 100, 28)),
+                width: 2,
+              ),
+              color: Colors.transparent, // สีพื้นหลังโปร่งใส
+            ),
             margin: const EdgeInsets.fromLTRB(50, 25, 50, 0),
             padding: const EdgeInsets.all(25),
-            color: const Color.fromARGB(217, 202, 202, 208),
             child: Center(
               child: Form(
                 key: formKey,
@@ -174,74 +193,7 @@ class _registerState extends State<register> {
                           ),
                         ),
                         const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          width: 350,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF3F60A0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.facebook,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  'เข้าสู่ระบบ Facebook',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          width: 350,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 227, 32, 32),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.mail,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  'เข้าสู่ระบบ Gmail',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         SizedBox(
                           width: 350,
@@ -252,7 +204,7 @@ class _registerState extends State<register> {
                               labelText: 'ชื่อผู้ใช้งาน',
                             ),
                             validator: (val) {
-                              if (val !.isEmpty) {
+                              if (val!.isEmpty) {
                                 return 'โปรดกรอกข้อมูล';
                               }
                               return null;
@@ -261,9 +213,8 @@ class _registerState extends State<register> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
-                     
                         SizedBox(
                           width: 350,
                           child: TextFormField(
@@ -273,7 +224,7 @@ class _registerState extends State<register> {
                               labelText: 'อีเมลล์',
                             ),
                             validator: (val) {
-                              if (val !.isEmpty) {
+                              if (val!.isEmpty) {
                                 return 'โปรดกรอกข้อมูล';
                               }
                               return null;
@@ -282,7 +233,7 @@ class _registerState extends State<register> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         SizedBox(
                           width: 350,
@@ -293,11 +244,9 @@ class _registerState extends State<register> {
                               labelText: 'ยืนยันอีเมลล์',
                             ),
                             validator: (val) {
-                              if (val !.isEmpty) {
+                              if (val!.isEmpty) {
                                 return 'โปรดกรอกข้อมูล';
-                              }
-                              else if(val != email.text)
-                              {
+                              } else if (val != email.text) {
                                 return 'อีเมลล์ไม่ตรงกัน';
                               }
                               return null;
@@ -305,7 +254,7 @@ class _registerState extends State<register> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         SizedBox(
                           width: 350,
@@ -316,7 +265,7 @@ class _registerState extends State<register> {
                               labelText: 'รหัสผ่าน',
                             ),
                             validator: (val) {
-                              if (val !.isEmpty) {
+                              if (val!.isEmpty) {
                                 return 'โปรดกรอกข้อมูล';
                               }
                               return null;
@@ -325,20 +274,55 @@ class _registerState extends State<register> {
                           ),
                         ),
                         const SizedBox(
+                          height: 2,
+                        ),
+                        FormField<bool>(
+                          validator: (value) => validateCheckbox(value),
+                          builder: (FormFieldState<bool> state) {
+                            return Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: isChecked,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          isChecked = value!;
+                                        });
+                                        state.didChange(
+                                            value); // อัพเดทค่าใน FormField
+                                      },
+                                      activeColor:
+                                          Color.fromARGB(255, 252, 110, 28),
+                                      checkColor: Colors.white,
+                                    ),
+                                    Text('ยินยอมและยอมรับ'),
+                                  ],
+                                ),
+                                if (state.hasError)
+                                  Text(
+                                    state.errorText!,
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
                         SizedBox(
                           width: 350,
-                          height: 60,
+                          height: 40,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF3F60A0),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 252, 110, 28),
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15))),
+                                    borderRadius: BorderRadius.circular(3))),
                             onPressed: () {
                               bool pass = formKey.currentState!.validate();
-                              if(pass)
-                              {
+                              if (pass) {
                                 sign_up();
                               }
                             },
@@ -351,6 +335,9 @@ class _registerState extends State<register> {
                               ),
                             ),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                       ],
                     ),

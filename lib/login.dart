@@ -20,13 +20,35 @@ class _loginState extends State<login> {
   }
 
   @override
+
+  bool? isChecked = false;
+  final formKey = GlobalKey<FormState>();
+
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
+  Future sign_in() async {
+    String url = "http://10.0.2.2/transport_login/login.php";
+    final respone = await http.post(Uri.parse(url), body: {
+      'email': email.text,
+      'password': pass.text,
+    });
+    var data = json.decode(respone.body);
+    if (data == "Error") {
+      Navigator.pushNamed(context, 'home');
+    } else {
+      Navigator.pushNamed(context, 'login');
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
         title: const Text('Transport Application'),
       ),
-      body: Column(children: [
+      body: ListView(children: [
         Container(
           color: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 7),
@@ -99,7 +121,7 @@ class _loginState extends State<login> {
           ),
         ),
         Container(
-          color: Colors.black,
+          color: Color.fromARGB(255, 26, 61, 99),
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -133,6 +155,7 @@ class _loginState extends State<login> {
           color: const Color.fromARGB(217, 202, 202, 208),
           child: Center(
             child: Form(
+              key: formKey,
               child: ListView(
                 shrinkWrap: true,
                 children: [
@@ -159,7 +182,9 @@ class _loginState extends State<login> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            
+                          },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -225,6 +250,13 @@ class _loginState extends State<login> {
                             border: OutlineInputBorder(),
                             labelText: 'อีเมลล์',
                           ),
+                          validator: (val) {
+                            if (val!.isEmpty) {
+                              return 'โปรดกรอกข้อมูล';
+                            }
+                            return null;
+                          },
+                          controller: email,
                         ),
                       ),
                       const SizedBox(
@@ -238,23 +270,55 @@ class _loginState extends State<login> {
                             border: OutlineInputBorder(),
                             labelText: 'รหัสผ่าน',
                           ),
+                          validator: (val) {
+                            if (val!.isEmpty) {
+                              return 'โปรดกรอกข้อมูล';
+                            }
+                            return null;
+                          },
+                          controller: pass,
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                          height: 2,
+                        ),
+                         SizedBox(
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: isChecked, 
+                                onChanged: (bool? value){
+                                  setState(() {
+                                    isChecked = value!;
+                                  });
+                                },
+                                activeColor: Color.fromARGB(255, 252, 110, 28),
+                                checkColor: Colors.white,
+                                ),
+                                Text('จดจำข้อมูลฉันไว้'),
+                            ],
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 30,
                       ),
+
                       SizedBox(
-                        width: 350,
-                        height: 60,
+                        width: 325,
+                        height: 40,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3F60A0),
+                            backgroundColor: const Color.fromARGB(255, 252, 110, 28),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(3),
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, 'home');
+                            bool pass = formKey.currentState!.validate();
+                              if(pass)
+                              {
+                                sign_in();
+                              }
                           },
                           child: const Text(
                             'เข้าสู่ระบบ',
