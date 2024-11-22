@@ -38,7 +38,7 @@ class _registerState extends State<register> {
   TextEditingController email = TextEditingController();
 
   Future sign_up() async {
-    String url = "htttep://10.0.2.2/transport_login/register.php";
+    String url = "http://10.0.2.2/transport_login/register.php";
     final respone = await http.post(Uri.parse(url), body: {
       'name': name.text,
       'email': email.text,
@@ -96,7 +96,7 @@ class _registerState extends State<register> {
                             ),
                           ),
 
-                          // ส่วยของปุ่ม Icon
+                          // ส่วนของปุ่ม Icon
                           Padding(
                             padding: const EdgeInsets.only(right: 13.0),
                             child: CircleAvatar(

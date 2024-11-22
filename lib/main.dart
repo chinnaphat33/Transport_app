@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/home.dart';
+import 'package:flutter_login/userscreen.dart';
 import 'login.dart';
 import 'register.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         'register': (context) => register(),
         'home':(context) => homepage(),
         'login':(context) => login(),
+        'user':(context) => Userscreen(),
       },
     );
   }

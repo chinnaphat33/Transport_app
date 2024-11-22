@@ -20,7 +20,6 @@ class _loginState extends State<login> {
   }
 
   @override
-
   bool? isChecked = false;
   final formKey = GlobalKey<FormState>();
 
@@ -35,9 +34,9 @@ class _loginState extends State<login> {
     });
     var data = json.decode(respone.body);
     if (data == "Error") {
-      Navigator.pushNamed(context, 'home');
-    } else {
       Navigator.pushNamed(context, 'login');
+    } else {
+      Navigator.pushNamed(context, 'user');
     }
   }
 
@@ -152,7 +151,13 @@ class _loginState extends State<login> {
         Container(
           margin: const EdgeInsets.fromLTRB(50, 50, 50, 0),
           padding: const EdgeInsets.all(25),
-          color: const Color.fromARGB(217, 202, 202, 208),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: (Color.fromARGB(255, 252, 100, 28)),
+              width: 2,
+            ),
+            color: Colors.transparent, // สีพื้นหลังโปร่งใส
+          ),
           child: Center(
             child: Form(
               key: formKey,
@@ -173,74 +178,61 @@ class _loginState extends State<login> {
                       const SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
-                        width: 350,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF3F60A0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          onPressed: () {
-                            
-                          },
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.facebook,
-                                color: Colors.white,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF3F60A0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: EdgeInsets.zero,
                               ),
-                              SizedBox(width: 10),
-                              Text(
-                                'เข้าสู่ระบบ Facebook',
-                                style: TextStyle(
+                              onPressed: () {},
+                              child: Center(
+                                child: Icon(
+                                  Icons.facebook,
                                   color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
+                                  size: 37,
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: 350,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 227, 32, 32),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
                             ),
                           ),
-                          onPressed: () {},
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
+                          SizedBox(width: 30),
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 234, 64, 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: () {},
+                              child: Icon(
                                 Icons.mail,
                                 color: Colors.white,
+                                size: 33,
                               ),
-                              SizedBox(width: 10),
-                              Text(
-                                'เข้าสู่ระบบ Gmail',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 17,
+                      ),
+                      const SizedBox(
+                        child: Text('หริอ'),
+                      ),
+                      const SizedBox(
+                        height: 17,
                       ),
                       SizedBox(
                         width: 350,
@@ -280,45 +272,44 @@ class _loginState extends State<login> {
                         ),
                       ),
                       const SizedBox(
-                          height: 2,
+                        height: 2,
+                      ),
+                      SizedBox(
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                              activeColor: Color.fromARGB(255, 252, 110, 28),
+                              checkColor: Colors.white,
+                            ),
+                            Text('จดจำข้อมูลฉันไว้'),
+                          ],
                         ),
-                         SizedBox(
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                value: isChecked, 
-                                onChanged: (bool? value){
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
-                                activeColor: Color.fromARGB(255, 252, 110, 28),
-                                checkColor: Colors.white,
-                                ),
-                                Text('จดจำข้อมูลฉันไว้'),
-                            ],
-                          ),
-                        ),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
-
                       SizedBox(
                         width: 325,
                         height: 40,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 252, 110, 28),
+                            backgroundColor:
+                                const Color.fromARGB(255, 252, 110, 28),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
                           onPressed: () {
                             bool pass = formKey.currentState!.validate();
-                              if(pass)
-                              {
-                                sign_in();
-                              }
+                            if (pass) {
+                              sign_in();
+                            }
                           },
                           child: const Text(
                             'เข้าสู่ระบบ',
@@ -337,8 +328,15 @@ class _loginState extends State<login> {
                         onPressed: () {
                           Navigator.pushNamed(context, 'register');
                         },
-                        child:
-                            const Text("Didn't have any Account? Sign Up now"),
+                        child: const Text(
+                          "สมัครสมาชิก",
+                          style: TextStyle(
+                            decoration:
+                                TextDecoration.underline, // ใส่ขีดใต้ข้อความ
+                            decorationColor: Colors.black, // เลือกสีขีด
+                            decorationThickness: 1, // ความหนาของขีด
+                          ),
+                        ),
                       ),
                     ],
                   ),
