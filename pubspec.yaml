@@ -68,6 +68,11 @@ flutter:
     - images/Transpot_logo.png
     - images/Transpot.jpg
     - images/Transportuser_logo.png
+    - images/picHome1.png
+    - images/picHome2.png
+    - images/picHome3.png
+    - images/payment_pic.png
+
     # - images/photo_homescreen1.jpg
     # - images/photo_homescreen2.jpg
     # - images/photo_homescreen3.jpg

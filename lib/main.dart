@@ -7,7 +7,7 @@ import 'package:flutter_login/re_password/newpassword.dart';
 import 'package:flutter_login/userscreen.dart';
 import 'login.dart';
 import 'register.dart';
-
+  
 void main() {[
   runApp(
  
@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: const homepage(),
+      home: const Homepage(),
       routes: {
         'register': (context) => register(),
-        'home': (context) => homepage(),
+        'home': (context) => Homepage(),
         'login': (context) => login(),
         'user': (context) => Userscreen(),
         'otp': (context) => Otpscreen(),
