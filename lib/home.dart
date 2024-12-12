@@ -24,6 +24,7 @@ class _homepageState extends State<homepage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transport Application'),
+         automaticallyImplyLeading: false,
       ),
       body: Column(children: [
         // ส่วนของ logo
@@ -98,37 +99,80 @@ class _homepageState extends State<homepage> {
             ],
           ),
         ),
-        Container(
-          color: Color.fromARGB(255, 26, 61, 99), // สีพื้นหลังแทบเป็นสีดำ
-          padding: const EdgeInsets.symmetric(vertical: 20), // เพิ่ม Padding
+       Container(
+          color: Color.fromARGB(255, 26, 61, 99),
+          height: 60,
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment.spaceEvenly, // จัดตำแหน่งช่องว่างเท่ากัน
-            children: const [
-              // ไอเท็มในแทบ
-              Text(
-                'หน้าหลัก',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 16,
+                  ),
+                  padding: EdgeInsets.zero, 
+                  minimumSize: Size(50, 50), 
+                  tapTargetSize:
+                      MaterialTapTargetSize.shrinkWrap, 
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'home');
+                },
+                child: Text('หน้าหลัก'),
               ),
-              Text(
-                'เกี่ยวกับ',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 16,
+                  ),
+                  padding: EdgeInsets.zero, 
+                  minimumSize: Size(50, 50), 
+                  tapTargetSize:
+                      MaterialTapTargetSize.shrinkWrap, 
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'home');
+                },
+                child: Text('เกี่ยวกับ'),
               ),
-              Text(
-                'บริการ',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 16,
+                  ),
+                  padding: EdgeInsets.zero, 
+                  minimumSize: Size(50, 50), 
+                  tapTargetSize:
+                      MaterialTapTargetSize.shrinkWrap, 
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'home');
+                },
+                child: Text('บริการ'),
               ),
-              Text(
-                'คำแนะนำ',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 16,
+                  ),
+                  padding: EdgeInsets.zero, 
+                  minimumSize: Size(50, 50), 
+                  tapTargetSize:
+                      MaterialTapTargetSize.shrinkWrap, 
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'home');
+                },
+                child: Text('คำแนะนำ'),
               ),
-              Text(
-                'ติดต่อเรา',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ],
-          ),
-        ),
+              
         // Center(
         //   child: Center(
         //     child: ListView(
@@ -141,6 +185,11 @@ class _homepageState extends State<homepage> {
         //   ),
         // ),
       ]),
+      
+      )
+      ]
+    )
     );
+    
   }
 }
