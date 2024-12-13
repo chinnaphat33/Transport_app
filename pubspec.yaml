@@ -40,6 +40,7 @@ dependencies:
   google_sign_in: ^6.2.2
   email_otp: ^3.0.2
   font_awesome_flutter: ^10.8.0
+  flutter_social_button: ^1.1.6+1
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,11 @@ flutter:
     - images/picHome2.png
     - images/picHome3.png
     - images/payment_pic.png
+    - images/getedproduct_pic.png
+    - images/findproduct_pic.png
+    - images/manholdphone_pic.png
+    
+    
 
     # - images/photo_homescreen1.jpg
     # - images/photo_homescreen2.jpg
