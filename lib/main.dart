@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/UserScreen/checkparcel.dart';
 import 'package:flutter_login/home.dart';
+
+import 'package:flutter_login/re_password/OTPsendResetpass.dart';
+import 'package:flutter_login/re_password/OTPverifyResetpass.dart';
+import 'package:flutter_login/re_password/newpassword.dart';
+import 'package:flutter_login/UserScreen/userscreen.dart';
 import 'login.dart';
 import 'register.dart';
-
-void main() {
-  runApp(const MyApp());
+  
+void main() {[
+  runApp(
+ 
+         MyApp(),
+    ),
+];
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +28,17 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: const homepage(),
+      home: const Homepage(),
       routes: {
         'register': (context) => register(),
-        'home':(context) => homepage(),
-        'login':(context) => login(),
+        'home': (context) => Homepage(),
+        'login': (context) => login(),
+        'user': (context) => Userscreen(),
+        // 'otp': (context) => Otpscreen(),
+        'resetpass': (context) => resetpass(),
+        'resetpass2': (context) => resetpass2(),
+        'newpass': (context) => newpass(),
+        'checkparcel': (context) => checkparcelscreen(),
       },
     );
   }
