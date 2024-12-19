@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:async';
@@ -61,6 +61,7 @@ class _loginState extends State<login> {
 
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
+  TextEditingController name = TextEditingController();
 
   final RegExp passwordRegex = RegExp(
     r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$',
@@ -144,7 +145,6 @@ class _loginState extends State<login> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFFF5F5F5),
-
       body: ListView(children: [
         Container(
           margin: EdgeInsets.fromLTRB(0, 20, 22, 0),
@@ -372,7 +372,7 @@ class _loginState extends State<login> {
                             ),
                             Text('จดจำข้อมูลฉันไว้'),
                             SizedBox(
-                              width: 115,
+                              width: 95,
                             ),
                             TextButton(
                               style: TextButton.styleFrom(
@@ -411,11 +411,17 @@ class _loginState extends State<login> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             bool pass = formKey.currentState!.validate();
                             if (pass) {
+                              final SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              sharedPreferences.setString('email', email.text);
                               sign_in();
                             }
+                            final SharedPreferences sharedPreferences =
+                                await SharedPreferences.getInstance();
+                            sharedPreferences.setString('email', email.text);
                           },
                           child: const Text(
                             'เข้าสู่ระบบ',
@@ -432,22 +438,18 @@ class _loginState extends State<login> {
                           textStyle: const TextStyle(fontSize: 15),
                         ),
                         onPressed: () {
-                          if (formKey.currentState?.validate() ?? false) {
+                         
                             // เมื่อกรอกข้อมูลถูกต้อง ส่ง OTP
                             Navigator.pushNamed(context, 'register');
-                          }
-                          Navigator.pushNamed(context, 'register');
+                          
                         },
                         child: const Text(
                           "สมัครสมาชิก",
                           style: TextStyle(
                             color: Color.fromARGB(255, 252, 110, 28),
-
-                            decoration:
-                                TextDecoration.underline, // ใส่ขีดใต้ข้อความ
-                            decorationColor:
-                                Color.fromARGB(255, 252, 110, 28), // เลือกสีขีด
-                            decorationThickness: 1, // ความหนาของขีด
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color.fromARGB(255, 252, 110, 28),
+                            decorationThickness: 1,
                           ),
                         ),
                       ),
@@ -458,7 +460,7 @@ class _loginState extends State<login> {
             ),
           ),
         ),
-      ]), // This trailing comma makes auto-formatting nicer for build methods.
+      ]),
     );
   }
 }

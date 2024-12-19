@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/UserScreen/checkparcel.dart';
 import 'package:flutter_login/home.dart';
-import 'package:flutter_login/otpscreen.dart';
+
 import 'package:flutter_login/re_password/OTPsendResetpass.dart';
 import 'package:flutter_login/re_password/OTPverifyResetpass.dart';
 import 'package:flutter_login/re_password/newpassword.dart';
-import 'package:flutter_login/userscreen.dart';
+import 'package:flutter_login/UserScreen/userscreen.dart';
 import 'login.dart';
 import 'register.dart';
   
@@ -33,10 +34,11 @@ class MyApp extends StatelessWidget {
         'home': (context) => Homepage(),
         'login': (context) => login(),
         'user': (context) => Userscreen(),
-        'otp': (context) => Otpscreen(),
+        // 'otp': (context) => Otpscreen(),
         'resetpass': (context) => resetpass(),
         'resetpass2': (context) => resetpass2(),
         'newpass': (context) => newpass(),
+        'checkparcel': (context) => checkparcelscreen(),
       },
     );
   }

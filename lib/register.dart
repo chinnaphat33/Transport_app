@@ -91,11 +91,7 @@ class _registerState extends State<register> {
   Color _buttonColor = const Color.fromARGB(255, 26, 61, 99);
   void _changeColor() {
     setState(() {
-      // เปลี่ยนสีเป็นสีใหม่ (เช่น สีที่ต้องการหลังจากกด)
       _buttonColor = const Color.fromARGB(70, 0, 51, 102);
-
-      // เรียกฟังก์ชัน sendOTP หรือฟังก์ชันอื่นๆ ที่คุณต้องการ
-      // sendOTP(context, email);
     });
   }
 
@@ -112,6 +108,40 @@ class _registerState extends State<register> {
     return null;
   }
 
+  void _showPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'หนังสือยินยอมให้เก็บรวบรวมใช้ และเปิดเผยข้อมูลส่วนบุคคล',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          content: SingleChildScrollView(
+            child: Text(
+              'อ้างถึงพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 บริษัทฯในฐานะผู้ควบคุมข้อมูลส่วนบุคคลได้จัดทำนโยบายความเป็นส่วนตัว (Privacy Policy) ขึ้นเพื่อแจ้งให้เจ้าของข้อมูลส่วนบุคคล ได้ทราบเกี่ยวกับรายละเอียด และวัตถุประสงค์ รวมถึงรายละเอียดเกี่ยวกับการเปิดเผยข้อมูลส่วนบุคคลระยะเวลาในการจัดเก็บข้อมูลส่วนบุคคล ตลอดจนสิทธิตามกฎหมายของท่านที่เกี่ยวข้องกับข้อมูลส่วนบุคคลและวิธีการที่ท่านสามารถติดต่อบริษัทฯเพื่อดำเนินการเกี่ยวกับข้อมูลส่วนบุคคลโดยท่านสามารถศึกษานโยบายความเป็นส่วนตัว\n'
+              ' เพื่อให้สอดคล้องกับ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล บริษัทฯมีความจำเป็นต้องขอความยินยอมในการเก็บรวบรวม ใช้หรือเปิดเผยข้อมูลส่วนบุคคลของท่านแก่บริษัทฯ และหรือบุคคลที่ได้รับมอบหมายให้เป็นผู้ประมวลผลข้อมูลส่วนบุคคลจากบริษัทฯ และหรือหน่วยงานของรัฐ และหรือเอกชนเพื่อปฏิบัติให้เป็นไปตามกฎหมาย ดังต่อไปนี้ข้าพเจ้าในฐานะเจ้าของข้อมูลส่วนบุคคล ซึ่งต่อไปนี้จะเรียกว่า “ผู้ให้ความยินยอม” ผู้ให้ความยินยอมได้อ่านและรับทราบนโยบายความเป็นส่วนตัว (Privacy Policy) ของบริษัทฯแล้ว และขอให้ความยินยอมแก่บริษัทฯในการเก็บรวบรวม ใช้หรือเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าที่มีอยู่กับบริษัทฯได้ภายใต้ข้อกำหนด เงื่อนไข และวัตถุประสงค์ ดังต่อไปนี้  ข้อ 1. ข้อมูลที่จัดเก็บและใช้โดยบริษัทฯ ข้อมูลส่วนบุคคลของเจ้าของข้อมูลที่บริษัทฯได้รับมา ได้แก่\n'
+              '1.1. ข้อมูลทั่วไป หมายความว่า ข้อมูลเกี่ยวกับบุคคลซึ่งทำให้สามารถระบุ และบ่งบอกตัวบุคคลของเจ้าของข้อมูลส่วนบุคคลนั้นได้ ไม่ว่าทางตรงหรือทางอ้อม เช่น ชื่อบริษัท ชื่อ-นามสกุล วันเดือนปีเกิด อายุ ที่อยู่ เพศ หมายเลขโทรศัพท์ หมายเลขบัตรประชาชน เลขนิติบุคคล อีเมล์ ไลน์ไอดี ชื่อในการใช้งานเฟซบุ๊ก (Facebook) รูปถ่าย เป็นต้น',
+              textAlign: TextAlign.justify,
+              style: TextStyle(fontSize: 14),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'ปิด',
+                style: TextStyle(color: Color.fromARGB(255, 252, 110, 28)),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   String? validateCheckbox(bool? value) {
     if (value == null || !value) {
       return 'กรุณาเลือก checkbox';
@@ -122,6 +152,7 @@ class _registerState extends State<register> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController name = TextEditingController();
+  TextEditingController surname = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController otp = TextEditingController();
@@ -130,6 +161,7 @@ class _registerState extends State<register> {
     String url = "http://10.0.2.2/transport_login/register.php";
     final respone = await http.post(Uri.parse(url), body: {
       'name': name.text,
+      'surname': surname.text,
       'email': email.text,
       'password': pass.text,
     });
@@ -267,7 +299,7 @@ class _registerState extends State<register> {
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      labelText: 'ชื่อ-นามสกุล',
+                                      labelText: 'ชื่อ',
                                       labelStyle: TextStyle(
                                         color: Colors.grey, // สีปกติของ label
                                       ),
@@ -298,6 +330,54 @@ class _registerState extends State<register> {
                                       return null;
                                     },
                                     controller: name,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            SizedBox(
+                              width: 350,
+                              child: Stack(
+                                children: [
+                                  TextFormField(
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      labelText: 'นามสกุล',
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey, // สีปกติของ label
+                                      ),
+                                      floatingLabelStyle: TextStyle(
+                                        color: Color.fromARGB(255, 252, 110,
+                                            28), // สีของ label เมื่อ focus
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 252, 110, 28),
+                                          width: 2,
+                                        ),
+                                      ),
+                                      suffixIcon: name.text.isEmpty
+                                          ? null
+                                          : IconButton(
+                                              icon: Icon(Icons.close),
+                                              onPressed: () {
+                                                name.clear();
+                                              }),
+                                    ),
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return 'โปรดกรอกข้อมูล';
+                                      }
+                                      return null;
+                                    },
+                                    controller: surname,
                                   ),
                                 ],
                               ),
@@ -442,8 +522,11 @@ class _registerState extends State<register> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                onPressed:
-                                    _changeColor, // เรียกฟังก์ชันเมื่อกดปุ่ม
+                                onPressed: () {
+                                  sendOTP(
+                                      context, email); // เรียกฟังก์ชัน sendOTP
+                                  _changeColor(); // เรียกฟังก์ชันเปลี่ยนสีปุ่ม
+                                },
                                 child: const Text(
                                   'ส่ง OTP',
                                   style: TextStyle(
@@ -493,6 +576,8 @@ class _registerState extends State<register> {
                                 return Column(
                                   children: [
                                     Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Checkbox(
                                           value: isChecked,
@@ -500,18 +585,64 @@ class _registerState extends State<register> {
                                             setState(() {
                                               isChecked = value!;
                                             });
-                                            state.didChange(
-                                                value); // อัพเดทค่าใน FormField
+                                            state.didChange(value);
                                           },
                                           activeColor:
                                               Color.fromARGB(255, 252, 110, 28),
                                           checkColor: Colors.white,
                                         ),
                                         Text(
-                                          'ข้าพเจ้าอ่าน และยอมรับ ข้อตกลงการใช้\nและนโยบายความเป็นส่วนตัว',
+                                          'ข้าพเจ้าอ่านและยอมรับ ',
                                           style: TextStyle(
-                                            fontSize:
-                                                12, // คุณสามารถปรับขนาดตัวอักษรที่นี่
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            _showPopup(context);
+                                          },
+                                          style: TextButton.styleFrom(
+                                            padding: EdgeInsets
+                                                .zero, // เอา padding ออก
+                                            minimumSize: Size(0,
+                                                0), // ลดขนาดปุ่มให้พอดีข้อความ
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap, // ลด hitbox
+                                          ),
+                                          child: Text(
+                                            'ข้อตกลงการใช้งาน',
+                                            style: TextStyle(
+                                              fontSize: 9,
+                                              color: Color.fromARGB(
+                                                  255, 252, 110, 28),
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          'และ',
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            _showPopup(context);
+                                          },
+                                          style: TextButton.styleFrom(
+                                            padding: EdgeInsets
+                                                .zero, // เอา padding ออก
+                                            minimumSize: Size(0,
+                                                0), // ลดขนาดปุ่มให้พอดีข้อความ
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap, // ลด hitbox
+                                          ),
+                                          child: Text(
+                                            'นโยบายความเป็นส่วนตัว',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              color: Color.fromARGB(
+                                                  255, 252, 110, 28),
+                                            ),
                                           ),
                                         ),
                                       ],
